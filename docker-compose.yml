@@ -13,9 +13,7 @@ services:
       POSTGRES_USER: PGroonga
 
   luoxu-backend:
-    build:
-      context: ../
-      dockerfile: Dockerfile
+    image: zhpjy/luoxu
     container_name: luoxu
     ports:
       - 9008:9008
