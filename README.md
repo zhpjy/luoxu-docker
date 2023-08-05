@@ -21,7 +21,7 @@
         ports:
         - 8080:80
         restart: unless-stopped
-        command: http-server -p 80 --proxy http://luoxu-back:9008
+        command: http-server -p 80 --proxy http://luoxu-backend:9008
         links:
-        - "luoxu-back:backend"
+        - "luoxu-backend:backend"
     ```
