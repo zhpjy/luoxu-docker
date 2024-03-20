@@ -37,7 +37,7 @@ WORKDIR /app/luoxu
 
 RUN apt-get update && apt-get install -y python3 pip libpython3-dev opencc &&\
 	apt-get clean && rm -rf /var/lib/apt/lists/* &&\
-    pip install --no-cache-dir -r requirements.txt && pip install PySocks tomli
+    pip install --no-cache-dir -r /app/requirements.txt && pip install PySocks tomli
 
 # make sure all messages always reach console
 ENV PYTHONUNBUFFERED=1
