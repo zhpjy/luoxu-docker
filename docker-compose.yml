@@ -1,9 +1,7 @@
 version: '2'
 services:
-  db:
+  database:
     image: groonga/pgroonga:2.4.5-debian-13
-      #ports:
-      #  - 5432:5432
     volumes:
       - ./db/init:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/postgresql/data:Z
@@ -11,14 +9,35 @@ services:
       POSTGRES_DB: luoxu
       POSTGRES_PASSWORD: PGroonga
       POSTGRES_USER: PGroonga
+    healthcheck:
+      test: /usr/bin/pg_isready
+      interval: 5s
+      timeout: 10s
+      retries: 120
+
+  luoxu-frontend:
+    container_name: luoxu-frontend
+    build: 
+      dockerfile: ./frontend.Dockerfile
+      args:
+        #后端的地址
+        DOMAIN: http://example.com:8080
+    ports:
+      - 8080:80
+    restart: unless-stopped
+    command: http-server -p 80 --proxy http://luoxu-backend:9008
+    links:
+    - "luoxu-backend"
 
   luoxu-backend:
-    image: zhpjy/luoxu
-    container_name: luoxu
-    ports:
-      - 9008:9008
+    build: 
+      dockerfile: ./backend.Dockerfile
+    container_name: luoxu-backend
+      #ports:
+      #- 9008:9008
+    restart: unless-stopped
     volumes:
-      - ./config:/config
-      - ./config.toml:/app/config.toml
+      - ./telegram:/telegram
+      - ./config.toml:/app/luoxu/config.toml
     links:
-      - "db:database"
+      - "database"

@@ -1,0 +1,27 @@
+[telegram]
+api_id = 12345678
+api_hash = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+account = "+8611111111111"
+session_db = "/telegram/myid"
+#需要索引的群组id
+index_groups = [
+  "111111111"
+]
+# ipv6 = false
+# socks5 proxy
+#proxy = ["127.0.0.1", "1080"]
+#mark_as_read = false
+
+[database]
+url = "postgresql://PGroonga:PGroonga@database:5432/luoxu"
+
+[web]
+listen_host = "0.0.0.0"
+listen_port = 9008
+prefix = "/luoxu"
+cache_dir = "cache"
+default_avatar = "nobody.jpg"
+ghost_avatar = "ghost.jpg"
+origins = [
+  "http://localhost",
+]
