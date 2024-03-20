@@ -3,7 +3,7 @@ FROM node:lts-alpine AS builder-image
 RUN apk fix && \
     apk --no-cache --update add git 
 
-ENV DOMAIN="http://example.com"
+ENV BACKEND_URL="http://example.com"
 
 WORKDIR /build
 RUN git clone --depth 1 -b master https://github.com/lilydjwg/luoxu-web /build && \

@@ -5,6 +5,7 @@ services:
     volumes:
       - ./db/init:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/postgresql/data:Z
+    restart: unless-stopped
     environment:
       POSTGRES_DB: luoxu
       POSTGRES_PASSWORD: PGroonga
@@ -21,9 +22,9 @@ services:
       dockerfile: ./frontend.Dockerfile
       args:
         #后端的地址
-        DOMAIN: http://example.com:8080
+        BACKEND_ADDR: ${BACKEND_URL}:${FRONTEND_PORT}
     ports:
-      - 8080:80
+      - ${FRONTEND_PORT}:80
     restart: unless-stopped
     command: http-server -p 80 --proxy http://luoxu-backend:9008
     links:
