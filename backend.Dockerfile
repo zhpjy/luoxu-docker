@@ -31,18 +31,19 @@ RUN ls -alht /build; \
 
 FROM ubuntu AS runner-image
 
-COPY --from=builder-image /build /app/luoxu
+COPY --from=builder-image /build /app
+
+WORKDIR /app/luoxu
 
 RUN apt-get update && apt-get install -y python3 pip libpython3-dev opencc &&\
 	apt-get clean && rm -rf /var/lib/apt/lists/* &&\
-    pip install --no-cache-dir -r /app/luoxu/requirements.txt && pip install PySocks tomli
+    pip install --no-cache-dir -r requirements.txt && pip install PySocks tomli
 
 # make sure all messages always reach console
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 9008
 
-WORKDIR /app/luoxu
 
 CMD ["/usr/bin/python3","-m", "luoxu"]
 
