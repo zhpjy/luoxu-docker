@@ -22,20 +22,18 @@ services:
       dockerfile: ./frontend.Dockerfile
       args:
         #后端的地址
-        BACKEND_ADDR: ${BACKEND_URL}:${FRONTEND_PORT}
+        BACKEND_URL: ${BACKEND_ADDR}:${FRONTEND_PORT}
     ports:
       - ${FRONTEND_PORT}:80
     restart: unless-stopped
     command: http-server -p 80 --proxy http://luoxu-backend:9008
     links:
-    - "luoxu-backend"
+      - "luoxu-backend"
 
   luoxu-backend:
     build: 
       dockerfile: ./backend.Dockerfile
     container_name: luoxu-backend
-      #ports:
-      #- 9008:9008
     restart: unless-stopped
     volumes:
       - ./telegram:/telegram
