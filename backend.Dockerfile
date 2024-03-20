@@ -33,11 +33,12 @@ FROM ubuntu AS runner-image
 
 COPY --from=builder-image /build /app
 
-WORKDIR /app/luoxu
+RUN apt-get update && apt-get install -y python3 pip libpython3-dev opencc && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    pip install --no-cache-dir -r /app/requirements.txt && \
+    pip install PySocks tomli
 
-RUN apt-get update && apt-get install -y python3 pip libpython3-dev opencc &&\
-	apt-get clean && rm -rf /var/lib/apt/lists/* &&\
-    pip install --no-cache-dir -r /app/requirements.txt && pip install PySocks tomli
+WORKDIR /app
 
 # make sure all messages always reach console
 ENV PYTHONUNBUFFERED=1

@@ -10,8 +10,9 @@ services:
       POSTGRES_DB: luoxu
       POSTGRES_PASSWORD: PGroonga
       POSTGRES_USER: PGroonga
+      POSTGRES_HOST_AUTH_METHOD: trust
     healthcheck:
-      test: /usr/bin/pg_isready
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
       interval: 5s
       timeout: 10s
       retries: 120
@@ -37,6 +38,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./telegram:/telegram
-      - ./config.toml:/app/luoxu/config.toml
+      - ./config.toml:/app/config.toml
     links:
       - "database"
