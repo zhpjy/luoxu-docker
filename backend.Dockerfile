@@ -35,8 +35,10 @@ COPY --from=builder-image /build /app
 
 RUN apt-get update && apt-get install -y python3 pip libpython3-dev opencc && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    pip install --no-cache-dir -r /app/requirements.txt && \
-    pip install PySocks tomli
+    pip install --break-system-packages --no-cache-dir -r /app/requirements.txt && \
+    pip install --break-system-packages PySocks tomli && \
+    cp /app/querytrans/target//release/libquerytrans.so /app/querytrans.so
+    
 
 WORKDIR /app
 
