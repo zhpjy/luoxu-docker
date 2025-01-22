@@ -1,4 +1,3 @@
-version: '2'
 services:
   database:
     image: groonga/pgroonga:2.4.5-debian-13

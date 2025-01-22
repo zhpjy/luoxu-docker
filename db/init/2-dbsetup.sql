@@ -117,3 +117,6 @@ $$ LANGUAGE 'plpgsql';
 
 CREATE TRIGGER table_updated AFTER INSERT
   ON messages FOR EACH ROW EXECUTE PROCEDURE update_usernames();
+
+-- 初始化表分区
+SELECT init_message_partitions();
